@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { SuscribeImage, CloseButton as Close } from "../../assets";
 import { obtenerNoticias } from "./fakeRest";
-import {CalcularMinutosDePublicada} from "./Utils/CalcularMinutosDePublicada";
-import {INoticiasNormalizadas} from "./Utils/INoticiasNormalizadas";
-import {MayusculasEnPalabras} from "./Utils/MayusculasEnPalabras";
-import {NoticiaFinal} from "./Utils/NoticiaFinal";
+import { CalcularMinutosDePublicada } from "./Utils/CalcularMinutosDePublicada";
+import { INoticiasNormalizadas } from "./Utils/INoticiasNormalizadas";
+import { MayusculasEnPalabras } from "./Utils/MayusculasEnPalabras";
+import { NoticiaFinal } from "./Utils/NoticiaFinal";
 import CardNoticias from "./Utils/CardNoticias";
 
 
@@ -23,7 +23,9 @@ import {
 } from "./styled";
 
 /***
- * El principio Single Responsability:  se refactorizo parte del codigo agregando componente CardNoticias.
+ * El principio Single Responsability:  
+ * Codigo refactorizado, creacion de nuevos archivos dentro de carpeta news/Utils para extraer lógica del 
+ * componente Noticias. Principio de una sola responsabilidad para mantener la complejidad del componente baja
  */
 const Noticias = () => {
   const [noticias, setNoticias] = useState<INoticiasNormalizadas[]>([]);
@@ -35,10 +37,8 @@ const Noticias = () => {
 
       const data = respuesta.map((n) => {
         const titulo = MayusculasEnPalabras(n);
-  
-    const minutosTranscurridos = CalcularMinutosDePublicada(n);
-    return NoticiaFinal(n, minutosTranscurridos, titulo);
-        
+        const minutosTranscurridos = CalcularMinutosDePublicada(n);
+        return NoticiaFinal(n, minutosTranscurridos, titulo);
       });
 
       setNoticias(data);
@@ -53,16 +53,6 @@ const Noticias = () => {
       <ListaNoticias>
         {noticias.map((n) => (
           <CardNoticias key={n.id} noticia={n} setModal={setModal} />
-         /* <TarjetaNoticia key={n.id} >
-            <ImagenTarjetaNoticia src={n.imagen} />
-            <TituloTarjetaNoticia>{n.titulo}</TituloTarjetaNoticia>
-            <FechaTarjetaNoticia>{n.fecha}</FechaTarjetaNoticia>
-            <DescripcionTarjetaNoticia>
-              {n.descripcionCorta}
-            </DescripcionTarjetaNoticia>
-            <BotonLectura onClick={() => setModal(n)}>Ver más</BotonLectura>
-          </TarjetaNoticia>*/
-
         ))}
         {modal ? (
           (!modal.esPremium) ? (

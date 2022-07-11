@@ -1,5 +1,3 @@
-//1. crear el mock de la API utilizando MSW.
-//2. escribir los test cases del componente, evaluando el happy path y tmb flujos alternativos
 import { fireEvent, screen, waitFor } from "@testing-library/react";
 import { render } from "../../test-utils";
 import Cita from "./Cita";
